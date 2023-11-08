@@ -1,27 +1,36 @@
 BEGIN {
     FS = ","
-    basketball_wins = 0
-    basketball_diff_sum = 0
-    soccer_football_home_count = 0
+    sum_small_orders = 0
+    count_small_orders = 0
+    count_retail = 0
 }
 
-$2 == "basketball(M)" {
-    basketball_wins++
-    basketball_diff_sum += $4 - $6
+NR == 1 {
+    next
 }
 
-($2 == "football" || $2 == "soccer(W)") && $7 == "yes" {
-    soccer_football_home_count++
+{
+    transaction_total = $3
+    num_items = $4
+    transaction_type = $2
+    
+    if (num_items <= 3) {
+        sum_small_orders += transaction_total
+        count_small_orders++
+    }
+    
+    if (transaction_type == "retail") {
+        count_retail++
+    }
 }
 
 END {
-    if (basketball_wins > 0) {
-        avg_bball_diff = basketball_diff_sum / basketball_wins
-        print "Avg bball score differential =", avg_bball_diff
+    if (count_small_orders > 0) {
+        avg_small_orders = sum_small_orders / count_small_orders
+        printf("Avg small orders = %.3f\n", avg_small_orders)
     } else {
-        print "Avg bball score differential = 0"
+        printf("Avg small orders = 0.000\n")
     }
-    
-    print "Soccer/football home count =", soccer_football_home_count
-}
 
+    printf("Count retail = %d\n", count_retail)
+}
