@@ -19,6 +19,6 @@ BEGIN {
 
 END {
     average = price / cylinder;
-    {print "inexpensive count =", count}
-    {print "average =", average}
+    {print "inexpensive count =",count}
+    {print "average =",average}
 }
