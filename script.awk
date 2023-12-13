@@ -1,19 +1,26 @@
 #! /usr/bin/env gawk -f
 
 BEGIN {
-    FS='\t'
-    count = 0
-    cylinder = 0
-
+    FS = ","
+    count = 0;
+    cylinder = 0;
+    price = 0;
 }
 
-if ($5 < 30000 || $6 = 4) {
+($4 < 30000) {
     count++
-    cylinder++
+}
+
+($6 == 4) {
+    cylinder++;
+    price += $4
 }
 
 
 END {
-    average = count / cylinder
-    print "inexpensive count = ", count ;
-    print "average = ", average ;
+    average = price / cylinder;
+    {print "inexpensive count = ", count}
+    {print "average = ", average}
+    {print "cylinder count = ", cylinder}
+    {print "price = ", price}
+}
