@@ -11,7 +11,7 @@ BEGIN {
     count++
 }
 
-($6 == 4) {
+($6 == 4) && ($5 == "hybrid") {
     cylinder++;
     price += $4
 }
@@ -21,6 +21,4 @@ END {
     average = price / cylinder;
     {print "inexpensive count = ", count}
     {print "average = ", average}
-    {print "cylinder count = ", cylinder}
-    {print "price = ", price}
 }
